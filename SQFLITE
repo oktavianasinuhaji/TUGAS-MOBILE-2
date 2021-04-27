@@ -1,0 +1,85 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(App());
+
+class App extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Oktaviana Br Sinuhaji / 6SIA1',
+      home: Scaffold( backgroundColor: Colors.blueGrey,
+        appBar: AppBar( 
+          title: Text('Input Favorite Music'),
+        ),
+        body: Musik(),
+      ),
+    );
+  }
+}
+
+class DataMusik {
+  String judul;
+  String penyanyi;
+  String dirilis;
+
+  DataMusik({this.judul, this.penyanyi, this.dirilis});
+}
+
+// class Musik
+class Musik extends StatefulWidget {
+  _MyappState createState() => _MyappState();
+}
+
+class _MyappState extends State<Musik> {
+  //deklarasi variabel
+  final txtjudul = TextEditingController();
+  final txtpenyanyi = TextEditingController();
+  final txtdirilis = TextEditingController();
+
+  List<Widget> data = [];
+
+  onSimpan() {
+    setState(() {
+      data.add(ListTile(
+        leading: Icon(Icons.audiotrack),
+        title: Text(txtjudul.text),
+        subtitle: Text(txtpenyanyi.text),
+        trailing: Text(txtdirilis.text),
+      ));
+      txtjudul.clear();
+      txtpenyanyi.clear();
+      txtdirilis.clear();
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        new Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              TextField(
+                controller: txtjudul,
+                decoration: InputDecoration(hintText: 'Judul Lagu'),
+              ),
+              TextField(
+                controller: txtpenyanyi,
+                decoration: InputDecoration(hintText: 'Nama Penyanyi'),
+              ),
+              TextField(
+                controller: txtdirilis,
+                decoration: InputDecoration(hintText: 'Tahun Dirilis'),
+              ),
+              Divider(height: 5.0),
+              ElevatedButton(child: Text("Simpan"), onPressed: onSimpan),
+            ],
+          ),
+        ),
+        new Column(
+          children: data,
+        )
+      ],
+    );
+  }
+}
